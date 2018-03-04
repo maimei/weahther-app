@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 
-export default class Cities extends Component {
+const cities = ['New York', 'Amsterdam', 'Helsinki', 'Dubai', 'Tokyo'];
+const citylist = cities.map((city) => <th>{city}</th>);
 
+export default class Cities extends Component {
 
   render() {
     return (
       <thead>
         <tr>
-          <th>City</th>
-          <th>Temperature (°C)</th>
+          {citylist}
         </tr>
       </thead>
     );

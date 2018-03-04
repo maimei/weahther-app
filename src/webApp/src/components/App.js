@@ -1,31 +1,65 @@
 import React, { Component } from 'react';
-import logo from './earth_day.png';
+//import logo from './earth_day.png';
+import logo from './earth.gif';
 import './App.css';
 import _ from 'lodash';
 import Measurements from './Measurements';
 import CreateMeasurement from './CreateMeasurement';
+//import Test from './Test';
 
+//const measurements = [ {temperature: 7.4}, {temperature: 2.5}];
 
-const measurements = [
+//all measurements for new york
+const helsinki = [7.4, 5.3, 3.7, 3.8, 7.5];
+const measurements = [{helsinki: -7.4}, {helsinki: 5.3}, {newyork: 3.7}];
+
+//all measurements for helsinki
+//const amsterdam = [{newyork: -8.2}, {newyork:-5.1}, {newyork:-9.7}, {newyork:-4.1}];
+
+//this.toFinnishTime(new Date()),
+
+const newyork = [ 
 {
-  city: "New York",
-  temperature: 7
+  time: "15:02",
+  temperature: 7.4
+}, 
+{
+  time: "13:11",
+  temperature: 2.5
 },
 {
-  city: "Amsterdam",
-  temperature: 2
+  time: "11:46",
+  temperature: 1.5
+}
+];
+
+const amsterdam = [ 
+{
+  time: "15:02",
+  temperature: -2.4
+}, 
+{
+  time: "13:11",
+  temperature: -2.5
+},
+{
+  time: "11:46",
+  temperature: -3.8
 }
 ];
 
 export default class App extends Component {
-  
+
   constructor(props) {
     super(props);
-    //this.cities = Array(5).fill(["New York", "Amsterdam", "Helsinki", "Dubai", "Tokyo"]);
-    this.state = {
-      measurements
-    };
+    
+    this.state = {measurements, amsterdam, helsinki, newyork};
   }
+
+//
+// <Measurements 
+//  measurements={this.state.measurements}
+// />
 
   render() {
     return (
@@ -39,40 +73,18 @@ export default class App extends Component {
 
           <h3>All Measurements</h3>
             <div className="cities" class="boxed">
-            <CreateMeasurement measurements={this.state.measurements}
-              CreateMeasurement={this.createMeasurement.bind(this)}
-            />
-            <Measurements 
-              measurements={this.state.measurements}
-              saveMeasurement={this.saveMeasurement.bind(this)}
-              deleteMeasurement={this.deleteMeasurement.bind(this)}
+            
+              <Measurements 
+                helsinki={this.state.helsinki}
+                newyork={this.state.newyork}
+                amsterdam={this.state.amsterdam}
+              
               />
-            </div>
+            </div>            
+
           <h3>Past 24hrs</h3>
         </p>
       </div>
     );
-  }
-
-  //This method allows to add a new measurement with the given temperature
-  //TODO: add for the right town (hand in town as well or button?)
-  createMeasurement(temperature) {
-    this.state.measurements.push( {
-      city: "Unknown",
-      temperature
-    });
-    this.setState( { measurements: this.state.measurements });
-  }
-
-  //Allows to edit the temperature measurement (not needed but nice example)
-  saveMeasurement(oldMeasurement, newMeasurement) {
-    const foundMeasurement = _.find(this.state.measurements, measurement => measurement.temperature === oldMeasurement)
-    foundMeasurement.measurement = newMeasurement;
-    this.setState( { measurements: this.state.measurements} );
-  }
-
-  deleteMeasurement(measurementToDelete) {
-    _.remove(this.state.measurements, measurement => measurement.temperature === measurementToDelete);
-    this.setState( { measurements: this.state.measurement });
   }
 }
