@@ -5,19 +5,8 @@ import './App.css';
 import _ from 'lodash';
 import Measurements from './Measurements';
 import CreateMeasurement from './CreateMeasurement';
-//import Test from './Test';
-
-//const measurements = [ {temperature: 7.4}, {temperature: 2.5}];
 
 //all measurements for new york
-const helsinki = [7.4, 5.3, 3.7, 3.8, 7.5];
-const measurements = [{helsinki: -7.4}, {helsinki: 5.3}, {newyork: 3.7}];
-
-//all measurements for helsinki
-//const amsterdam = [{newyork: -8.2}, {newyork:-5.1}, {newyork:-9.7}, {newyork:-4.1}];
-
-//this.toFinnishTime(new Date()),
-
 const newyork = [ 
 {
   time: "15:02",
@@ -26,13 +15,10 @@ const newyork = [
 {
   time: "13:11",
   temperature: 2.5
-},
-{
-  time: "11:46",
-  temperature: 1.5
 }
 ];
 
+//all measurements for amsterdam
 const amsterdam = [ 
 {
   time: "15:02",
@@ -41,25 +27,24 @@ const amsterdam = [
 {
   time: "13:11",
   temperature: -2.5
-},
-{
-  time: "11:46",
-  temperature: -3.8
 }
 ];
+
+const helsinki = [];
+
+const cityNames = ['New York', 'Amsterdam', 'Helsinki', 'Dubai', 'Tokyo'];
+//console.log(cityNames[0]);
+
+//const cities = [...newyork, ...amsterdam, ...]
+// TODO: put all city arrays into one array
 
 export default class App extends Component {
 
   constructor(props) {
     super(props);
     
-    this.state = {measurements, amsterdam, helsinki, newyork};
+    this.state = {amsterdam, helsinki, newyork};
   }
-
-//
-// <Measurements 
-//  measurements={this.state.measurements}
-// />
 
   render() {
     return (
@@ -78,7 +63,7 @@ export default class App extends Component {
                 helsinki={this.state.helsinki}
                 newyork={this.state.newyork}
                 amsterdam={this.state.amsterdam}
-              
+                createMeasurement={this.createMeasurement.bind(this)}
               />
             </div>            
 
@@ -86,5 +71,24 @@ export default class App extends Component {
         </p>
       </div>
     );
+  }
+
+  //This method allows to add a new measurement with the given temperature
+  //TODO: add for the right town (make dependant on cityIndex)
+  createMeasurement(cityIndex, temperature) {
+    //city=newyork
+    this.state.newyork.push( {
+      time: this.toFinnishTime(new Date()),
+      temperature: temperature
+    });
+    console.log(this.state.newyork)
+    this.setState( { newyork: this.state.newyork });
+  }
+
+  //Converts the given time to Finnish time (GTM+2)
+  toFinnishTime(date) {
+    //var date = new Date();
+    date.setHours(date.getHours()+2);
+    return date.toJSON().replace(/T/, ' ').replace(/\..+/, '');
   }
 }

@@ -26,13 +26,6 @@ export default class Measurements extends Component {
     return times;
   }
 
-  //Converts the given time to Finnish time (GTM+2)
-  toFinnishTime(date) {
-    //var date = new Date();
-    date.setHours(date.getHours()+2);
-    return date.toJSON().replace(/T/, ' ').replace(/\..+/, '');
-  }
-
   render() {
     return (
         
@@ -50,7 +43,7 @@ export default class Measurements extends Component {
               {this.showTemperature(this.props.newyork)}
               <td>
                 <CreateMeasurement newyork={this.props.newyork}
-                createMeasurement={this.createMeasurement.bind(this)}
+                createMeasurement={this.props.createMeasurement.bind(this)}
                 />
                 {console.log("here")}
               </td>
@@ -79,21 +72,5 @@ export default class Measurements extends Component {
       </Tabs>
 
     );
-  }
-
-    //This method allows to add a new measurement with the given temperature
-  //TODO: add for the right town (hand in town as well or button?)
-  createMeasurement(newyork, temperature) {
-    //city=newyork
-    {console.log("here2")}
-    this.props.newyork.push( {
-      time: this.toFinnishTime(new Date()),
-      temperature: temperature
-    });
-    console.log(this.props.newyork)
-    this.props.render();
-    //this.props.setState( { newyork: this.props.newyork });
-    //this.props.setState( {newyork: this.props.newyork } );
-    //figure out how to render parent to show added measurement
   }
 }
